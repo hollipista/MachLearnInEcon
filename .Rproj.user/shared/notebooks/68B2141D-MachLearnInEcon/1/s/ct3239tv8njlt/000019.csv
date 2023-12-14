@@ -1,5 +1,0 @@
-"0","cv_df <- cv.tree(tree_df) 
-"
-"2","Error in model.frame.default(formula = bankrupt ~ ., data = df, subset = c(""26464"",  : 
-  'data' must be a data.frame, environment, or list
-"
