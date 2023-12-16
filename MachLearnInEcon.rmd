@@ -184,7 +184,7 @@ boost_model <- gbm(as.numeric("1"==bankrupt) ~ ., data = train_data, weights = w
 print(boost_model)
 
 predictions <- as.factor(predict(boost_model , newdata =test_data, n.trees = 5000, type = "response"))
-binary_predictions <- ifelse(as.numeric(as.character(predictions)) > 0.5, 1, 0)
+binary_predictions <- ifelse(as.numeric(as.character(predictions)) > 0.05, 1, 0)
 sum(binary_predictions)
 
 confusion_matrix_boost<- confusionMatrix(as.factor(binary_predictions), actual_values)
