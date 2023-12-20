@@ -21,6 +21,7 @@ library(caret)
 library(randomForest)
 library(gbm)
 library(ROSE)
+library(rpart.plot)
 ```
 
 ## About dataset
@@ -98,7 +99,7 @@ df <- df %>%
 
 ## Prepared dataset
 
-1. I've calculated 3-month moving average for all variables
+1. I've calculated 3-yearly moving average for all variables
 2. Get the yearly change for all: (t2-t1)/t1
 3. Winsorized the extreme values (because some statments could be zero)
 4. Dropped unnecessary variables
@@ -144,6 +145,8 @@ pruned_model <- prune(tree_model, cp = tree_model$cptable[which.min(tree_model$c
 plot(pruned_model)
 text(pruned_model)
 
+rpart.plot(pruned_model)
+
 # prediction
 predictions <- predict(pruned_model, newdata = test_data, type = "class")
 actual_values <- as.factor(test_data$bankrupt)
@@ -162,6 +165,8 @@ print(bag_model)
 predictions <- as.factor(predict(bag_model , newdata = test_data))
 confusion_matrix_bagging <- confusionMatrix(predictions, actual_values)
 print(confusion_matrix_bagging)
+
+varImpPlot(bag_model)
 ```
 
 ```{r random forest}
@@ -175,6 +180,8 @@ print(rf_model)
 predictions <- as.factor(predict(rf_model , newdata = test_data))
 confusion_matrix_rf <- confusionMatrix(predictions, actual_values)
 print(confusion_matrix_rf)
+
+varImpPlot(rf_model)
 ```
 
 ```{r boosting}
@@ -210,4 +217,6 @@ legend("topright", legend = c("Sensitivity", "Specificity"), col = c("blue", "re
 
 specificity_values
 sensitivity_values
+
+
 ```
